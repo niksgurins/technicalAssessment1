@@ -1,0 +1,13 @@
+.app {
+    text-align: center;
+}
+
+.content {
+    font-size: 1.5rem;
+    width: 75rem;
+    display: block;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -1,0 +1,67 @@
+.home h3 {
+    color: gray;
+    font-size: 0.8em;
+    margin: 0;
+}
+
+.home h1 {
+    font-size: 1.8em;
+    font-weight: 500;
+    margin: 0;
+}
+
+.home button {
+    display: inline-block;
+    text-align: center;
+    margin: 0.5rem;
+    border: solid 1px lightgray;
+    border-radius: 5px;
+    transition: background-color .2s ease-out;
+    padding: 1rem 2rem 1rem 2rem;
+}
+
+.home button:hover {
+    cursor: pointer;
+}
+
+.new-view-button {
+    background-color: #FFF;
+}
+
+.new-view-button:hover {
+    background-color: lightgray;
+}
+
+.create-report-button {
+    color: #FFF;
+    padding-left: 4rem !important;
+    background-color: steelblue;
+}
+
+.create-report-button:hover {
+    background-color: #3666a8;
+}
+
+/* .plus-icon {
+    position:absolute;
+    top: 12.5rem;
+    right: 15rem;
+    font-size: 3rem;
+    font-weight: 0;
+} */
+
+.overview-headers {
+    text-align: left;
+}
+
+.overview-dashboard {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    margin-bottom: 2rem;
+}
+
+.views-section {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-gap: 2rem;
+}

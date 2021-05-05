@@ -1,0 +1,72 @@
+.header {
+    position: sticky;
+    width: 100%;
+    top: 0;
+    user-select: none;
+    border-bottom: solid 1px lightgray;
+    background-color: #FFF !important;
+    margin-bottom: 2rem;
+}
+
+.header svg {
+    color: darkgray;
+}
+
+.header-content {
+    display: inline-block;
+    width: 75rem;
+    font-size: 1.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #FFF !important;
+}
+
+.header-buttons {
+    float: left;
+}
+
+.header-home-section, .header-units-section, .header-customers-section {
+    display: inline-block;
+    padding-right: 3rem;
+    padding-top: 2rem;
+    cursor: pointer;
+}
+
+.home-button, .units-button {
+    display: inline-block;
+}
+
+.header-search-bar {
+    float: right;
+}
+
+.header-units-section ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow: hidden;
+}
+
+.header-units-section li a {
+    padding: 0 !important;
+    display: block;
+    padding: 1rem 1rem;
+    text-decoration: none;
+    background-color: #fff;
+    height: 3rem;
+}
+
+.header-units-section .units-menu {
+    clear: both;
+    position: absolute;
+    max-height: 0; /* Hide menu initially */
+    transition: max-height .3s ease-out; /* Animate the menu stretching till max-height */
+}
+
+.header-units-section .units-menu-button {
+    display: none;
+}
+
+.header-units-section .units-menu-button:checked ~ .units-menu {
+    max-height: 9rem; /* 7.15rem per item */
+}
