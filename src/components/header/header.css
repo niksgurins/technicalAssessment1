@@ -27,17 +27,33 @@
 
 .header-home-section, .header-units-section, .header-customers-section {
     display: inline-block;
+    vertical-align: middle;
     padding-right: 3rem;
-    padding-top: 2rem;
+    padding-top: 1rem;
     cursor: pointer;
 }
 
-.home-button, .units-button {
-    display: inline-block;
+.header-search-bar {
+    position: relative;
+    float: right;
 }
 
-.header-search-bar {
-    float: right;
+.search-bar-icon {
+    position: absolute;
+    top: 2.7rem;
+    left: 1.2rem;
+}
+
+.search-bar {
+    font-size: 1em;
+    border: solid 1px lightgray;
+    border-radius: 5px;
+    margin-top: 1.6rem;
+    padding: 1rem 0 1rem 4rem;
+}
+
+.search-bar:focus {
+    outline: none;
 }
 
 .header-units-section ul {
@@ -69,4 +85,12 @@
 
 .header-units-section .units-menu-button:checked ~ .units-menu {
     max-height: 9rem; /* 7.15rem per item */
+}
+
+.float-left {
+    float: left;
+}
+
+.active {
+    border-bottom: solid steelblue 5px;
 }

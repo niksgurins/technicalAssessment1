@@ -3,27 +3,33 @@ import { NavLink, useHistory } from "react-router-dom";
 
 
 import "./header.css";
-import { House, Check2Square, BoxSeam, Search } from "react-bootstrap-icons";
+import { House, Check2Square, BoxSeam, Search, ChevronDown } from "react-bootstrap-icons";
 
 const Header = () => {
     const [location, setLocation] = useState(window.location.pathname);
     const history = useHistory();
 
+    useEffect(() => {
+        console.log(location);
+        if(location != window.location.pathname)
+            setLocation(window.location.pathname);
+    })
+
     return (
         <header className="header">
             <div className="header-content">
                 <div className="header-buttons">
-                    <div className="header-home-section" onClick={() => history.push("/")}>
-                        <House size={20}></House>
-                        <p>Home</p>
+                    <div className={location == '/' ? "header-home-section active" : "header-home-section"} onClick={() => history.push("/")}>
+                        <p><House size={20}></House>Home</p>    
                     </div>
                     <div className="header-units-section">
                         <input className="units-menu-button" type="checkbox" id="units-menu-button" />
                         <label htmlFor="units-menu-button">
-                            <div className="units-button">
-                                <BoxSeam size={20}></BoxSeam>
-                                <p>Units</p>
-                            </div>
+                            
+                            <BoxSeam size={20} style={{"paddingTop": "0rem"}}></BoxSeam>
+                            <label style={{"marginBottom" : "3rem"}}>Units</label>
+                            <ChevronDown size={10}></ChevronDown>
+                            
                         </label>
                         <ul className="units-menu">
                             <li><NavLink to="/hoodies">Hoodies</NavLink></li>
@@ -32,13 +38,12 @@ const Header = () => {
                         </ul>
                     </div>
                     <div className="header-customers-section" onClick={() => history.push("/customers")}>
-                        <Check2Square size={20}></Check2Square>
-                        <p>Customers</p>
+                        <p><Check2Square size={20}></Check2Square>Customers</p>
                     </div>
                 </div>
                 <div className="header-search-bar">
-                    <Search size={20}></Search>
-                    <input className="search-input"></input>
+                    <Search size={18} className="search-bar-icon"></Search>
+                    <input className="search-bar" placeholder="Search..."></input>
                 </div>
             </div>
         </header>

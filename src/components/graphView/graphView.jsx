@@ -1,77 +1,102 @@
 import {useEffect, useState} from "react";
-import dataFile from "../../data/newOrders.json";
 import * as d3 from "d3";
+import { ChevronDown, ArrowUpRight, ArrowDownRight, ArrowRight } from "react-bootstrap-icons";
+import LineChart from "../charts/lineChart/lineChart";
+import BarChart from "../charts/barChart/barChart";
 
-const GraphView = () => {
+import "./graphView.css";
+import dataFile from "../../data/newOrders.json";
+import TIMESPANS from "../../constants/timeSpans";
+
+const GraphView = (props) => {
+    const [timeSpan, setTimeSpan] = useState(props.span);
     const [graphData, setGraphData] = useState([]);
+    const [totalValueDuringSpan, setTotalValueDuringSpan] = useState(0);
+    const [totalValueInPreviousSpanLength, setTotalValueInPreviousSpanLength] = useState(0);
 
-    const renderGraph = () => {
-        let data = dataFile.orders;
-        let width = 300;
-        let height = 100;
-        let margin = ({top: 20, right: 30, bottom: 30, left: 40});
-
-        let svg = d3.select("#graph")
-            .append("svg")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-                .attr("transform",
-                    "translate(" + margin.left + "," + margin.top + ")");
-        
-        data = data.map(d => {
-            return { date: new Date(d.date), value: d.value};
-        })
-        // Add X axis --> it is a date format
-        const x = d3.scaleTime()
-            .domain(d3.extent(data, d => { 
-                return new Date(d.date); 
-            }))
-            .range([0, width]);
-        // svg.append("g")
-        //     .attr("transform", `translate(0, ${height})`)
-        //     .call(d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0))
-        const color = "steelblue";
+    const renderTimeSpanLI = key => {
+        return (
+            <li key={key} value={key} onClick={(e) => { setTimeSpan(e.currentTarget.value); calculateTotalValueDuringSpan(e.currentTarget.value); }}>
+                {TIMESPANS[key]}
+            </li>
+        );
+    }
     
-        // Add Y axis
-        const y = d3.scaleLinear()
-            .domain([d3.min(data, d => d.value), d3.max(data, d => d.value)]).nice()
-            .range([height, 0])
-        // svg.append("g")
-        //     .call(d3.axisLeft(y))
-            //.call(g => g.select(".domain").remove())
-            // .call(g => g.select(".tick:last-of-type text").clone()
-            //     .attr("x", 3)
-            //     .attr("text-anchor", "start")
-            //     .attr("font-weight", "bold")
-            //     .text(data.y))
+    const calculateTotalValueDuringSpan = (span, dataArray) => {
+        let total = 0;
+        let specificDataSet;
+        // Assuming graphData is already sorted by date ascending - create a new array of just the values for those dates
+        if(dataArray.length <= span)
+            specificDataSet = dataArray.slice(0).map(item => { return item.value });
+        else
+            specificDataSet = dataArray.slice(dataArray.length-span).map(item => { return item.value });
         
-        // Add the line
-        svg.append("path")
-            .datum(data)
-            .attr("fill", "none")
-            .attr("stroke", "steelblue")
-            .attr("stroke-width", 1.5)
-            .attr("d", d3.line()
-                .defined(d => !isNaN(d.value))
-                .x(d => x(d.date))
-                .y(d => y(d.value))
-            )
+        total = specificDataSet.reduce((sum, current) => sum + current);
+        return Math.round(total);
+    }
+
+    const calculateTotalValueDuringPreviousSpan = (span, dataArray) => {
+        let total = 0;
+        let specificDataSet;
+        // Assuming graphData is already sorted by date ascending - create a new array of just the values for those dates
+        if(dataArray.length >= (span*2))
+            specificDataSet = dataArray.slice(dataArray.length-(span*2), dataArray.length-span).map(item => { return item.value });
+        else if(dataArray.length <= (span*2) && dataArray.length > span)
+            specificDataSet = dataArray.slice(0, span).map(item => { return item.value });
+        else
+            specificDataSet = dataArray.slice(0).map(item => { return item.value });
+    
+        total = specificDataSet.reduce((sum, current) => sum + current);
+        return Math.round(total);
     }
 
     useEffect(() => {
-        console.log(dataFile);
-        console.log(graphData.length);
-        if (graphData.length === 0) {
+        if (graphData.length !== dataFile.orders.length) {
             setGraphData(dataFile.orders);
-            renderGraph();
+            setTotalValueDuringSpan(calculateTotalValueDuringSpan(timeSpan, dataFile.orders));
+            setTotalValueInPreviousSpanLength(calculateTotalValueDuringPreviousSpan(timeSpan, dataFile.orders));
+            
         }
     });
 
+    const renderPercentDifferenceSpan = () => {
+        let percentageDifferenceBetweenSpans = Math.round(((totalValueDuringSpan/totalValueInPreviousSpanLength) * 100) - 100);
+        let diffDirection = percentageDifferenceBetweenSpans >= 0 ? percentageDifferenceBetweenSpans === 0 ? 'neutral' : 'upwards' : 'downwards';
+
+        return (
+            <span className="total-percent-difference" style={
+                diffDirection === 'neutral' ? 
+                    {"color" : "gold"} : 
+                diffDirection === 'upwards' ? 
+                    {"color": "limegreen"} : 
+                    {"color": "red"}
+            }>{percentageDifferenceBetweenSpans}%<span className="percentage-arrow-icon">{
+                diffDirection === 'neutral' ? 
+                <ArrowRight size={15}></ArrowRight> : 
+                diffDirection === 'upwards' ? 
+                <ArrowUpRight size={15}></ArrowUpRight> : 
+                <ArrowDownRight size={15}></ArrowDownRight>
+            }</span></span>
+        );
+    }
+
     return (
-        <div className="view">
-            GraphView
-            <div id="graph"></div>
+        <div className="view" id="view">
+            <div className="view-details">
+                <div className="view-headers">
+                    <h3>{props.data.toUpperCase()}</h3>
+                    <h1>{totalValueDuringSpan}{renderPercentDifferenceSpan()}</h1>
+                </div>
+                <label htmlFor="time-span-menu-btn" className="time-span-section">
+                    <input className="time-span-menu-btn" type="checkbox" id="time-span-menu-btn" />
+                    <ChevronDown size={10} style={{"float": "right", "paddingTop": "7px", paddingLeft: "5px", "cursor": "pointer"}}></ChevronDown>
+                    <label htmlFor="time-span-menu-btn" className="time-span-label">{TIMESPANS[timeSpan]}</label>
+                    <ul className="time-span-menu">
+                        {Object.keys(TIMESPANS).map(key => renderTimeSpanLI(key))}
+                    </ul>
+                </label>
+            </div>
+            <LineChart id={`view-graph${props.id}`} data={dataFile.orders}></LineChart>
         </div>
     );
 }

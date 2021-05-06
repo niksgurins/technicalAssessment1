@@ -4,3 +4,89 @@
     border-radius: 5px;
     box-shadow: 1px 1px 10px 0 rgba(0,0,0,.1);
 }
+
+.view-headers {
+    text-align: left;
+}
+
+.view-headers h1 {
+    font-size: 2em !important;
+}
+
+.view-details {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    padding: 2rem 2rem 0 2rem;
+}
+
+.total-percent-difference {
+    position: relative;
+    padding-left: 1rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.percentage-arrow-icon {
+    position:absolute;
+    top: 2px;
+    padding-left: 5px;
+}
+
+.time-span-section {
+    display: inline-block;
+    color: gray;
+    position: relative;
+}
+
+.time-span-label {
+    font-size: 1em;
+    float: right;
+    user-select: none;
+    cursor: pointer;
+}
+
+.time-span-menu-btn {
+    display: none;
+}
+
+.time-span-menu-btn:checked ~ .time-span-menu {
+    max-height: 10.4rem;
+}
+
+.time-span-menu {
+    position: absolute;
+    list-style: none;
+    overflow: hidden;
+    clear: both;
+    right: -1.2rem;
+    top: 1rem;
+    max-height: 0;
+    transition: max-height .3s ease-out;
+}
+
+.time-span-menu li {
+    text-align: left;
+    user-select: none;
+    background-color: #FFF;
+    padding: 0.2rem 0.6rem 0.2rem 0.6rem;
+    border-top: 1px solid lightgray;
+    border-left: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+    cursor: pointer;
+    transition: background-color .3s ease-out;
+}
+
+.time-span-menu li:first-of-type {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.time-span-menu li:last-of-type {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom: 1px solid lightgray;
+}
+
+.time-span-menu li:hover {
+    background-color: whitesmoke;
+}
