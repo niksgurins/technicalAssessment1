@@ -1,0 +1,12 @@
+.orders-overview {
+    grid-column: 1 /span 2;
+}
+
+.orders-overview-headers {
+    text-align: left;
+    padding: 2rem;
+}
+
+.orders-overview-headers h1 {
+    font-size: 1.2em !important;
+}

@@ -1,7 +1,9 @@
 import { useState } from "react";
 import GraphView from "../graphView/graphView";
+import OrdersOverview from "../ordersOverview/ordersOverview";
 import { Plus } from "react-bootstrap-icons";
 import "./home.css";
+import dataFile from "../../data/newOrders.json";
 
 const Home = () => {
     const [countViews, setCountViews] = useState(3);
@@ -18,14 +20,13 @@ const Home = () => {
                         <Plus size={30} className="plus-icon"></Plus>
                         <button className="create-report-button"><span className="plus-icon"></span> Create new report</button>
                     </div>
-                    <button className="new-view-button">New View</button>
+                    <button className="new-view-button">New view</button>
                 </div>
             </div>
             <div className="views-section">
-                <GraphView type="line" data="new orders" span="7" id="1"/>
-                <GraphView type="bar" data="returns" span="7" id="2"/>
-                {/* <GraphView type="Bar" data="Returns Volume" span="7" />
-                <GraphView /> */}
+                <GraphView type="line" data={dataFile.orders} title="new orders" span="7" id="1"/>
+                <GraphView type="bar" data={dataFile.orders} title="returns" span="7" id="2"/>
+                <OrdersOverview data={dataFile.orders} id="3"></OrdersOverview>
             </div>
         </div>
     );

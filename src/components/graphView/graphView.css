@@ -1,16 +1,11 @@
-.view {
-    background-color: #FFF;
-    border: 1px solid lightgray;
-    border-radius: 5px;
-    box-shadow: 1px 1px 10px 0 rgba(0,0,0,.1);
-}
-
 .view-headers {
     text-align: left;
 }
 
 .view-headers h1 {
+    display: flex;
     font-size: 2em !important;
+    align-items: flex-end;
 }
 
 .view-details {
@@ -20,16 +15,14 @@
 }
 
 .total-percent-difference {
-    position: relative;
+    display: flex;
+    justify-self: end;
+    align-items: center;
+    text-align: center;
     padding-left: 1rem;
+    padding-bottom: 0.4rem;
     font-size: 1.5rem;
     font-weight: 500;
-}
-
-.percentage-arrow-icon {
-    position:absolute;
-    top: 2px;
-    padding-left: 5px;
 }
 
 .time-span-section {
