@@ -10,3 +10,60 @@
 .orders-overview-headers h1 {
     font-size: 1.2em !important;
 }
+
+.orders-overview-headers h2 {
+    font-size: 1.05em;
+    font-weight: 400;
+    margin-bottom: 2px;
+}
+
+.orders-overview-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
+.orders-overview-circle {
+    grid-row: 1 /span 2;
+    color: steelblue;
+    padding-top: 1.7rem;
+    padding-right: 1rem;
+}
+
+.orders-percentage {
+    font-size: 0.95em !important;
+    letter-spacing: 0 !important;
+    font-weight: 400;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+.tooltip {
+    width: 14rem;
+    height: 7rem;
+    fill: url(#tooltip-gradient);
+}
+
+.tooltip-date, .tooltip-orders {
+    text-align: left;
+    font-size: 1.3rem;
+}
+
+.tooltip-value {
+    text-align: right;
+    font-size: 1.3rem;
+}
+
+.stop-top {
+    stop-color: whitesmoke;
+}
+
+.stop-border {
+    stop-color: #e8e8e8;
+}
+
+.stop-bottom {
+    stop-color: white;
+}

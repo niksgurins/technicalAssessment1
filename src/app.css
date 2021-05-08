@@ -10,4 +10,25 @@
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 3rem;
+}
+
+@media screen and (max-width: 1007px) {
+    .content {
+        width: 60rem;
+    }
+
+    #view-graph3 {
+        height: 14.3rem !important;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .content {
+        width: 50rem;
+    }
+
+    #view-graph3 {
+        height: 11.8rem !important;
+    }
 }

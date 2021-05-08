@@ -1,7 +1,5 @@
 // React Imports
 import { Route, BrowserRouter} from "react-router-dom";
-import { useEffect } from 'react';
-
 // Component Imports
 import Header from './components/header/header';
 import Home from "./components/home/home";

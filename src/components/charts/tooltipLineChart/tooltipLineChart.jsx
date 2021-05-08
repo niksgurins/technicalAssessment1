@@ -5,7 +5,7 @@ const TooltipLineChart = ({id, data}) => {
     const renderGraph = () => {
         d3.select(`#${id}`).selectChildren().remove();
         const width = 758;
-        const height = 150;
+        const height = 151;
         const margin = ({top: 10, right: 0, bottom: 20, left: 0});
         const color = "steelblue";
 
@@ -71,7 +71,7 @@ const TooltipLineChart = ({id, data}) => {
             .attr("fill", "steelblue")
             .attr("fill-opacity", 0.2)
             .attr("d", area);
-
+        
         // Tooltip adapted from http://www.d3noob.org/2014/07/my-favourite-tooltip-method-for-line.html
         const bisectDate = d3.bisector(d => { return d.date; }).left;
         const mousemove = (e) => {
@@ -87,6 +87,30 @@ const TooltipLineChart = ({id, data}) => {
             focus.select(".y")
                 .attr("transform", `translate(${x(d.date)}, ${0})`)
                 .attr("y2", height + margin.top + margin.bottom);
+
+            const tooltipHeight = 50;
+            const tooltipWidth = 140;
+            const tooltipMargin = 10;
+            const tooltipYValue = height - y(d.value) < tooltipHeight + tooltipMargin ? height - (tooltipHeight + tooltipMargin) : y(d.value) + tooltipMargin;
+            const tooltipXValue = x(d.date) + tooltipWidth + tooltipMargin > width ? x(d.date) - (tooltipWidth + tooltipMargin) : x(d.date) + tooltipMargin;
+            focus.select("rect.tooltip")
+                .attr("transform", `translate(${tooltipXValue}, ${tooltipYValue})`)
+                .text(d.value);
+
+            focus.select("text.tooltip-date")
+                .attr("transform", `translate(${tooltipXValue}, ${tooltipYValue})`)
+                .text(d.date.toDateString().slice(4));
+
+            focus.select("text.tooltip-orders")
+                .attr("transform", `translate(${tooltipXValue}, ${tooltipYValue})`)
+                .text("Orders:");
+            
+            focus.select("text.tooltip-value")
+                .attr("transform", `translate(${tooltipXValue}, ${tooltipYValue})`)
+                .text(d.value);
+
+            focus.select("circle.tooltip-circle")
+                .attr("transform", `translate(${tooltipXValue + 20}, ${tooltipYValue + 53})`)
         }
 
         let focus = svg.append("g")
@@ -109,6 +133,64 @@ const TooltipLineChart = ({id, data}) => {
             .style("stroke", "white")
             .attr("r", 6); 
         
+        console.log(Math.max(data.map(item => item.value)));
+
+        let tooltipGradient = svg.append('linearGradient')
+            .attr('id', 'tooltip-gradient')
+            .attr("gradientUnits", "userSpaceOnUse")
+            .attr("x1", 0).attr("y1", y(2240))
+            .attr("x2", 0).attr("y2", y(0));
+        // Create the stops of the main gradient. Each stop will be assigned
+        // a class to style the stop using CSS.
+        tooltipGradient.append("stop")
+            .attr("class", "stop-top")
+            .attr("offset", "0%");
+        tooltipGradient.append("stop")
+            .attr("class", "stop-top")
+            .attr("offset", "50%");
+        tooltipGradient.append("stop")
+            .attr("class", "stop-border")
+            .attr("offset", "50%");
+        tooltipGradient.append("stop")
+            .attr("class", "stop-bottom")
+            .attr("offset", "50.1%");
+
+        focus.append("rect")
+            .attr("rx", 5)
+            .attr("ry", 5)
+            .attr("class", "tooltip")
+            .style("stroke", "#e8e8e8")
+            .attr("stroke-width", 1)
+
+        focus.append("text")
+            .attr("class", "tooltip-date")
+            .style("stroke", "gray")
+            .style("stroke-width", "0.8px")
+            .style("opacity", 0.8)
+            .attr("dx", "1rem")
+            .attr("dy", "2.3rem");
+        
+        focus.append("circle")
+            .attr("class", "tooltip-circle")
+            .style("fill", color)
+            .attr("r", 6);
+            
+        focus.append("text")
+            .attr("class", "tooltip-orders")
+            .style("stroke", "gray")
+            .style("stroke-width", "0.8px")
+            .style("opacity", 0.8)
+            .attr("dx", "4rem")
+            .attr("dy", "5.7rem");
+
+        focus.append("text")
+            .attr("class", "tooltip-value")
+            .style("stroke", "black")
+            .style("stroke-width", "1px")
+            .style("opacity", 0.8)
+            .attr("dx", "9rem")
+            .attr("dy", "5.7rem");
+
         // Append the rectangle to capture mouse events
         svg.append("rect")
             .attr("width", width)
@@ -125,7 +207,7 @@ const TooltipLineChart = ({id, data}) => {
     })
     
     return (
-        <div id={id}>
+        <div id={id} style={{"height": "17.8rem"}}>
         </div>
     );
 }

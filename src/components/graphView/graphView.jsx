@@ -9,31 +9,33 @@ import TIMESPANS from "../../constants/timeSpans";
 const GraphView = ({span, title, data, id, type}) => {
     const [timeSpan, setTimeSpan] = useState(span);
 
+    const sliceData = (prev) => {
+        if(prev) {
+            if(data.length >= (timeSpan*2))
+                return data.slice(data.length-(timeSpan*2), data.length-timeSpan);
+            else if (data.length <= (timeSpan*2) && data.length > timeSpan)
+                return data.slice(0, timeSpan);
+            else
+                return data.slice(0);
+        } else {
+            if(data.length <= timeSpan)
+                return data.slice(0);
+            else
+                return data.slice(data.length-timeSpan);
+        }
+    }
+
     const renderViewHeadersDiv = () => {
         const sumTimespan = () => {
             let total = 0;
-            let specificDataSet;
-            // Assuming data is already sorted by date ascending - create a new array of just the values for those dates
-            if(data.length <= timeSpan)
-                specificDataSet = data.slice(0).map(item => { return item.value });
-            else
-                specificDataSet = data.slice(data.length-timeSpan).map(item => { return item.value });
-            
+            let specificDataSet = sliceData(false).map(item => item.value);
             total = Math.round(specificDataSet.reduce((sum, current) => sum + current));
             return total;
         }
 
         const sumPreviousTimeSpan = () => {
             let total = 0;
-            let specificDataSet;
-            // Assuming data is already sorted by date ascending - create a new array of just the values for those dates
-            if(data.length >= (timeSpan*2))
-                specificDataSet = data.slice(data.length-(timeSpan*2), data.length-timeSpan).map(item => { return item.value });
-            else if(data.length <= (timeSpan*2) && data.length > timeSpan)
-                specificDataSet = data.slice(0, timeSpan).map(item => { return item.value });
-            else
-                specificDataSet = data.slice(0).map(item => { return item.value });
-        
+            let specificDataSet = sliceData(true).map(item => item.value);
             total = Math.round(specificDataSet.reduce((sum, current) => sum + current));
             return total;
         }
@@ -51,10 +53,10 @@ const GraphView = ({span, title, data, id, type}) => {
                         {"color": "red"}
                 }>{percentageDifferenceBetweenSpans}%{
                     diffDirection === 'neutral' ? 
-                        <ArrowRight size={15}></ArrowRight> : 
+                        <ArrowRight size={15} style={{"paddingLeft": "5px"}}></ArrowRight> : 
                     diffDirection === 'upwards' ? 
-                    <ArrowUpRight size={15}></ArrowUpRight> : 
-                    <ArrowDownRight size={15}></ArrowDownRight>
+                    <ArrowUpRight size={15} style={{"paddingLeft": "5px"}}></ArrowUpRight> : 
+                    <ArrowDownRight size={15} style={{"paddingLeft": "5px"}}></ArrowDownRight>
                 }</span>
             );
         }
@@ -62,7 +64,7 @@ const GraphView = ({span, title, data, id, type}) => {
         return (
             <div className="view-headers">
                 <h3>{ title.toUpperCase() }</h3>
-                <h1>{ sumTimespan() }{ getPercentageDiff() }</h1>
+                <h1>{ sumTimespan().toLocaleString() }{ getPercentageDiff() }</h1>
             </div>
         )
     }
@@ -88,8 +90,8 @@ const GraphView = ({span, title, data, id, type}) => {
                 </label>
             </div>
             { type === "line" ? 
-                <LineChart id={`view-graph${id}`} data={data}></LineChart> :
-                <BarChart id={`view-graph${id}`} data={data}></BarChart>
+                <LineChart id={`view-graph${id}`} data={sliceData(false)}></LineChart> :
+                <BarChart id={`view-graph${id}`} data={sliceData(false)}></BarChart>
             }
         </div>
     );

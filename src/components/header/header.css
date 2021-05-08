@@ -3,7 +3,7 @@
     width: 100%;
     top: 0;
     user-select: none;
-    border-bottom: solid 1px lightgray;
+    border-bottom: solid 1px #e8e8e8;
     background-color: #FFF !important;
     margin-bottom: 2rem;
 }
@@ -46,7 +46,7 @@
 
 .search-bar {
     font-size: 1em;
-    border: solid 1px lightgray;
+    border: solid 1px #e8e8e8;
     border-radius: 5px;
     margin-top: 1.6rem;
     padding: 1rem 0 1rem 4rem;
@@ -93,4 +93,16 @@
 
 .active {
     border-bottom: solid steelblue 5px;
+}
+
+@media screen and (max-width: 1007px) {
+    .header-content {
+        width: 60rem;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .header-content {
+        width: 50rem;
+    }
 }
