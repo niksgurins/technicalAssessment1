@@ -21,6 +21,10 @@
     #view-graph3 {
         height: 14.3rem !important;
     }
+
+    .time-span-menu {
+        width: 10.7rem;
+    }
 }
 
 @media screen and (max-width: 640px) {

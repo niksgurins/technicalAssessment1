@@ -7,30 +7,34 @@ const Header = () => {
     const [location, setLocation] = useState(window.location.pathname);
     const history = useHistory();
 
+    const closeUnitsMenu = () => {
+        document.getElementById("units-menu-button").checked = false;
+    }
+
     return (
-        <header className="header" style={{"zIndex": "999"}}>
+        <header className="header" style={{ "zIndex": "999" }}>
             <div className="header-content">
                 <div className="header-buttons">
-                    <div className={ location == '/' ? "header-home-section active" : "header-home-section"} onClick={() => { setLocation('/'); history.push("/"); }}>
-                        <p><House size={20}></House>Home</p>    
+                    <div className={location == "/" ? "header-home-section active" : "header-home-section"} onClick={() => { setLocation('/'); history.push("/"); closeUnitsMenu() }}>
+                        <House size={20} className="header-icon"></House>
+                        <p>Home</p>
                     </div>
-                    <div className={ ['/hoodies','/tshirts','/hats'].includes(location) ? "header-units-section active" : "header-units-section"}>
-                        <input className="units-menu-button" type="checkbox" id="units-menu-button" />
-                        <label htmlFor="units-menu-button">
-                            
-                            <BoxSeam size={20}></BoxSeam>
-                            <label>Units</label>
-                            <ChevronDown size={10}></ChevronDown>
-                            
+                    <div className={["/hoodies", "/tshirts", "/hats"].includes(location) ? "active" : ""}>
+                        <label htmlFor="units-menu-button" className="header-units-section">
+                            <input className="units-menu-button" type="checkbox" id="units-menu-button" />
+                            <BoxSeam size={20} className="header-icon"></BoxSeam>
+                            <p>Units</p>
+                            <ChevronDown size={10} style={{ "paddingLeft": "3px", "paddingTop": "3px" }}></ChevronDown>
+                            <ul className="units-menu">
+                                <li onClick={() => { setLocation("/hoodies"); closeUnitsMenu() }}><NavLink to="/hoodies">Hoodies</NavLink></li>
+                                <li onClick={() => { setLocation("/tshirts"); closeUnitsMenu() }}><NavLink to="/tshirts">T-Shirts</NavLink></li>
+                                <li onClick={() => { setLocation("/hats"); closeUnitsMenu() }}><NavLink to="/hats">Hats</NavLink></li>
+                            </ul>
                         </label>
-                        <ul className="units-menu">
-                            <li onClick={() => setLocation('/hoodies')}><NavLink to="/hoodies">Hoodies</NavLink></li>
-                            <li onClick={() => setLocation('/tshirts')}><NavLink to="/tshirts">T-Shirts</NavLink></li>
-                            <li onClick={() => setLocation('/hats')}><NavLink to="/hats">Hats</NavLink></li>
-                        </ul>
                     </div>
-                    <div className={ location == '/customers' ? "header-customers-section active" : "header-customers-section"} onClick={() => { setLocation('/customers'); history.push("/customers"); }}>
-                        <p><Check2Square size={20}></Check2Square>Customers</p>
+                    <div className={location == "/customers" ? "header-customers-section active" : "header-customers-section"} onClick={() => { setLocation('/customers'); history.push("/customers"); closeUnitsMenu() }}>
+                        <Check2Square size={20} className="header-icon" />
+                        <p>Customers</p>
                     </div>
                 </div>
                 <div className="header-search-bar">

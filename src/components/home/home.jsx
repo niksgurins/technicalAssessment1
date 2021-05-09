@@ -7,12 +7,12 @@ import dataFile from "../../data/newOrders.json";
 
 const Home = () => {
     const [countViews, setCountViews] = useState(3);
-    const [BCHPriceLast2Years, setBCHPriceLast2Years ] = useState([]);
+    const [BCHPriceLast2Years, setBCHPriceLast2Years] = useState([]);
 
     useEffect(() => {
         if (BCHPriceLast2Years.length === 0) {
             fetch("https://api.coingecko.com/api/v3/coins/bitcoin-cash/market_chart?vs_currency=eur&days=60&interval=daily", {
-                headers: { 
+                headers: {
                     "Content-Type": "application/json"
                 }
             })
@@ -20,12 +20,9 @@ const Home = () => {
                 .then(res => {
                     let structuredData = res.prices.map((x, index) => {
                         let date = new Date();
-                        date.setDate(date.getDate() - (61-index));
+                        date.setDate(date.getDate() - (61 - index));
                         return { "date": date.toISOString().slice(0, 10), "value": Math.round((x[1] + Number.EPSILON) * 100) / 100 }
                     })
-
-                    console.log(structuredData);
-                    console.log(dataFile.orders);
 
                     setBCHPriceLast2Years(structuredData);
                 })
@@ -49,12 +46,12 @@ const Home = () => {
                 </div>
             </div>
             <div className="views-section">
-                <GraphView type="line" data={dataFile.orders} title="new orders" span="7" id="1"/>
-                <GraphView type="bar" data={dataFile.orders} title="returns" span="7" id="2"/>
-                { BCHPriceLast2Years.length > 0 ? <OrdersOverview data={BCHPriceLast2Years} id="3"></OrdersOverview> : '' }
+                <GraphView type="line" data={dataFile.orders} title="new orders" id="1" />
+                <GraphView type="bar" data={dataFile.orders} title="returns" id="2" />
+                {BCHPriceLast2Years.length > 0 ? <OrdersOverview data={BCHPriceLast2Years} id="3"></OrdersOverview> : ''}
             </div>
         </div>
     );
 }
- 
+
 export default Home;

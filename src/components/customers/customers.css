@@ -1,0 +1,125 @@
+.review-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    background-color: #FFF;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    box-shadow: 1px 1px 10px 0 rgba(0,0,0,.1); 
+}
+
+.rating-header {
+    font-size: 2.4rem;
+}
+
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.rating label {
+    padding: 0 1rem 0 1rem;
+}
+
+.rating span { position:relative; float: right; }
+.rating span input {
+    display: none;
+}
+
+.rating span label {
+    display:inline-block;
+    text-align:center;
+    color:gray;
+}
+
+.rating span label svg {
+    cursor: pointer;
+}
+
+.rating span:hover label, /* colour the currently hovered star */
+.rating span:hover ~ span label {
+    color:steelblue;
+}
+
+.comment-form-section {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 3rem;
+}
+
+.comment-form-section h2 {
+    font-size: 1.6rem;
+    text-align: left;
+    margin: 0;
+    color: gray;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+.comment-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: whitesmoke;
+    border: 1px solid lightgray;
+}
+
+.comment-form label {
+    grid-column: 1 /span 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 1rem 2rem 2rem 2rem;
+    text-align: left;
+    color: gray;
+}
+
+.comment-form label input,
+.comment-form label textarea {
+    margin-top: 5px;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 5px;
+    grid-column: 1 /span 2;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+}
+
+.comment-form label input:focus,
+.comment-form label textarea:focus {
+    outline: none;
+}
+
+.comment-form p {
+    margin: 0;
+}
+
+.comment-text-area {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.comment-form button {
+    margin: 1rem 2rem 1rem 2rem;
+    padding: 1rem 2rem 1rem 2rem;
+    background-color: #FFF;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    transition: background-color .3s ease-out;
+}
+
+.comment-form button:hover {
+    cursor: pointer;
+    background-color: lightgray;
+}
+
+.comment-form button:focus {
+    outline: none;
+}
+
+.review-error {
+    display: none;
+    grid-column: 1 /span 2;
+    color: red;
+}

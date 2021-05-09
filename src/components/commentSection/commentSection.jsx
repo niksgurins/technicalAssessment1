@@ -1,45 +1,59 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "./commentSection.css";
+import { connect, useDispatch } from "react-redux";
+import { addComments } from "../../reduxSlices/commentSlice"
+import { StarFill } from "react-bootstrap-icons";
 
-const CommentSection = () => {
-    const [comments, setComments] = useState([]);
-    const [userPhotos, setUserPhotos] = useState([]);
+const CommentSection = (props) => {
+    const dispatch = useDispatch();
 
-    const renderComment = ({user, text, createdAt}, index) => (
+    const renderStars = (amount) => {
+        let buffer = [];
+        for (let i = 0; i < amount; i++)
+            buffer.push(<StarFill size={15} key={i} style={{ "paddingLeft": "2px" }} />);
+
+        return buffer;
+    }
+
+    const renderComment = ({ buyer, text, rating, createdAt }, index) => (
         <div className="comment" key={index}>
-            <img src={`http://placekitten.com/200/${300 + index}`} style={{"height" : "4rem", "width": "4rem", "borderRadius": "5px"}}></img>
-            <p>{text}</p>
+            <img src={`http://placekitten.com/200/${300 + index}`} style={{ "height": "4rem", "width": "4rem", "borderRadius": "5px" }}></img>
+            <div className="comment-text">
+                {renderStars(rating)}
+                <p style={rating > 0 ? { "paddingLeft": "1rem" } : {}}>{text}</p>
+            </div>
             <p>{new Date(createdAt).toDateString().slice(4)}</p>
         </div>
     )
 
-    const renderComments = () => comments.map(renderComment);
-    
+    const renderComments = () => props.comment.comments.map(renderComment);
+
     useEffect(() => {
-        if (comments.length === 0) {
+        if (props.comment.comments.length === 0) {
             // Normally I'd fetch this from company db
             fetch("https://cat-fact.herokuapp.com/facts", {
-                headers: { 
+                headers: {
                     "Content-Type": "application/json"
                 }
             })
-            .then(res => res.json())
-            .then(res => {
-                let filteredData = res.map(comment => {
-                    return { user: comment.user, text: comment.text, createdAt: comment.createdAt }
-                });
-                setComments(filteredData);
-            })
-            .catch(err => console.log(err));
+                .then(res => res.json())
+                .then(res => {
+                    let filteredCommentData = res.map(comment => {
+                        return { buyer: comment.user, text: comment.text, rating: 0, createdAt: comment.createdAt };
+                    });
+
+                    dispatch(addComments(filteredCommentData));
+                })
+                .catch(err => console.log(err));
         }
     })
 
     return (
         <div className="comment-section">
-            <div className="comment-section-headers">
+            <div className="comment-section-headers" style={props.comment.comments.length > 0 ? {} : { "display": "none" }}>
                 <h3>BUYER</h3>
                 <h3>COMMENT</h3>
-                <h3 style={{"paddingRight": "4.9rem"}}>DATE</h3>
+                <h3 style={{ "paddingRight": "5.6rem" }}>DATE</h3>
             </div>
             <div>
                 {renderComments()}
@@ -47,5 +61,9 @@ const CommentSection = () => {
         </div>
     );
 }
- 
-export default CommentSection;
+
+const mapStateToProps = state => ({
+    comment: state.comment
+});
+
+export default connect(mapStateToProps)(CommentSection);

@@ -27,6 +27,7 @@
 
 .time-span-section {
     display: inline-block;
+    position: relative;
     color: gray;
     position: relative;
 }

@@ -23,3 +23,9 @@
 .comment img {
     border-radius: 1rem;
 }
+
+.comment-text {
+    display: flex;
+    align-items: center;
+    word-break: break-all;
+}

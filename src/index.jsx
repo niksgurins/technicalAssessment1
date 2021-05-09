@@ -1,11 +1,18 @@
-// import "react-app-polyfill/ie11";
-// import "react-app-polyfill/stable";
 import React from 'react';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
 import './index.css';
 import App from './app';
+import { Provider } from 'react-redux'
+import store from './store'
 
-render(
-    <App />,
-    document.getElementById('root')
-);
+const render = () => {
+    ReactDOM.render(
+        <Provider store={store}>
+            <App />
+        </Provider>,
+        document.getElementById('root')
+    )
+};
+
+store.subscribe(render);
+render();

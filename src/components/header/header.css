@@ -8,12 +8,8 @@
     margin-bottom: 2rem;
 }
 
-.header svg {
-    color: darkgray;
-}
-
 .header-content {
-    display: inline-block;
+    display: flex;
     width: 75rem;
     font-size: 1.5rem;
     margin-left: auto;
@@ -22,33 +18,41 @@
 }
 
 .header-buttons {
-    float: left;
+    display: flex;
+    align-items: center;
 }
 
 .header-home-section, .header-units-section, .header-customers-section {
-    display: inline-block;
+    display: flex;
+    align-items: center;
     vertical-align: middle;
-    padding-right: 3rem;
-    padding-top: 1rem;
+    padding-left: 1rem;
+    padding-right: 1.5rem;
     cursor: pointer;
+    color: gray;
+}
+
+.header-icon {
+    padding-right: 1rem;
 }
 
 .header-search-bar {
     position: relative;
-    float: right;
+    margin-left: auto;
 }
 
 .search-bar-icon {
     position: absolute;
-    top: 2.7rem;
+    top: 1.6rem;
     left: 1.2rem;
+    color: darkgray;
 }
 
 .search-bar {
     font-size: 1em;
     border: solid 1px #e8e8e8;
     border-radius: 5px;
-    margin-top: 1.6rem;
+    margin-top: 0.6rem;
     padding: 1rem 0 1rem 4rem;
 }
 
@@ -61,6 +65,8 @@
     padding: 0;
     list-style: none;
     overflow: hidden;
+    width: 100%;
+    box-shadow: 1px 1px 10px 0 rgba(0,0,0,.1); 
 }
 
 .header-units-section li a {
@@ -69,11 +75,27 @@
     padding: 1rem 1rem;
     text-decoration: none;
     background-color: #fff;
-    height: 3rem;
+    border-left: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+    color: gray;
+    height: 2rem;
+    transition: background-color .3s ease-out;
+}
+
+.header-units-section li a:hover {
+    background-color: whitesmoke;
+    color: black;
+}
+
+.header-units-section {
+    position: relative;
 }
 
 .header-units-section .units-menu {
     clear: both;
+    top: 5.2rem;
+    left: 0;
     position: absolute;
     max-height: 0; /* Hide menu initially */
     transition: max-height .3s ease-out; /* Animate the menu stretching till max-height */
@@ -84,15 +106,12 @@
 }
 
 .header-units-section .units-menu-button:checked ~ .units-menu {
-    max-height: 9rem; /* 7.15rem per item */
-}
-
-.float-left {
-    float: left;
+    max-height: 6.3rem; /* 7.15rem per item */
 }
 
 .active {
-    border-bottom: solid steelblue 5px;
+    color: black;
+    border-bottom: solid steelblue 2px;
 }
 
 @media screen and (max-width: 1007px) {
@@ -104,5 +123,9 @@
 @media screen and (max-width: 640px) {
     .header-content {
         width: 50rem;
+    }
+
+    .search-bar {
+        width: 12rem;
     }
 }
