@@ -6,6 +6,7 @@
     border-bottom: solid 1px #e8e8e8;
     background-color: #FFF !important;
     margin-bottom: 2rem;
+    z-index: 998;
 }
 
 .header-content {

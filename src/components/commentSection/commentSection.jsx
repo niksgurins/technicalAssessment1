@@ -53,7 +53,7 @@ const CommentSection = (props) => {
             <div className="comment-section-headers" style={props.comment.comments.length > 0 ? {} : { "display": "none" }}>
                 <h3>BUYER</h3>
                 <h3>COMMENT</h3>
-                <h3 style={{ "paddingRight": "5.6rem" }}>DATE</h3>
+                <h3 style={{ "paddingRight": "4.9rem" }}>DATE</h3>
             </div>
             <div>
                 {renderComments()}

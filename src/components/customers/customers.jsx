@@ -80,7 +80,7 @@ const Customers = () => {
                         </label>
                         <button type="button" onClick={() => clearForm()}>Clear</button>
                         <button type="button" onClick={() => submitComment()}>Submit</button>
-                        <p className="review-error" id="review-error">* You can't submit a blank review.</p>
+                        <p className="review-error" id="review-error">* You can't submit a blank review</p>
                     </div>
                 </div>
             </form>

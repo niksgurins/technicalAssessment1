@@ -2,12 +2,13 @@ import { useState } from "react";
 import { ChevronDown, ArrowUpRight, ArrowDownRight, ArrowRight } from "react-bootstrap-icons";
 import LineChart from "../charts/lineChart/lineChart";
 import BarChart from "../charts/barChart/barChart";
+import TooltipLineChart from "../charts/tooltipLineChart/tooltipLineChart";
 import DCO from "../../data/dataCalculationObject";
 import "./graphView.css";
 import TIMESPANS from "../../constants/timeSpans";
 
-const GraphView = ({ title, data, id, type }) => {
-    const [timeSpan, setTimeSpan] = useState(7);
+const GraphView = ({ title, data, id, type, span }) => {
+    const [timeSpan, setTimeSpan] = useState(span);
 
     const renderViewHeadersDiv = () => {
         const getPercentageDiff = () => {
@@ -59,9 +60,11 @@ const GraphView = ({ title, data, id, type }) => {
                     </ul>
                 </label>
             </div>
-            { type === "line" ?
+            { type === "LINE" ?
                 <LineChart id={`view-graph${id}`} data={DCO.sliceData(data, timeSpan, false)}></LineChart> :
-                <BarChart id={`view-graph${id}`} data={DCO.sliceData(data, timeSpan, false)}></BarChart>
+             type === "BAR" ?
+                <BarChart id={`view-graph${id}`} data={DCO.sliceData(data, timeSpan, false)}></BarChart> :
+                <TooltipLineChart id={`view-graph${id}`} data={DCO.sliceData(data, timeSpan, false)} />
             }
         </div>
     );

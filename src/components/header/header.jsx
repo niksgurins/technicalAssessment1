@@ -12,7 +12,7 @@ const Header = () => {
     }
 
     return (
-        <header className="header" style={{ "zIndex": "999" }}>
+        <header className="header">
             <div className="header-content">
                 <div className="header-buttons">
                     <div className={location == "/" ? "header-home-section active" : "header-home-section"} onClick={() => { setLocation('/'); history.push("/"); closeUnitsMenu() }}>

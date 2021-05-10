@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import GraphView from "../graphView/graphView";
 import OrdersOverview from "../ordersOverview/ordersOverview";
+import NewViewModal from "../newViewModal/newViewModal";
 import { Plus } from "react-bootstrap-icons";
 import "./home.css";
 import dataFile from "../../data/newOrders.json";
 
 const Home = () => {
     const [countViews, setCountViews] = useState(3);
+    const [additionalViews, setAdditionalViews] = useState([]);
     const [BCHPriceLast2Years, setBCHPriceLast2Years] = useState([]);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         if (BCHPriceLast2Years.length === 0) {
@@ -42,14 +45,16 @@ const Home = () => {
                         <Plus size={30} className="plus-icon"></Plus>
                         <button className="create-report-button"><span className="plus-icon"></span> Create new report</button>
                     </div>
-                    <button className="new-view-button">New view</button>
+                    <button className="new-view-button" onClick={() => setShowModal(true)}>New view</button>
                 </div>
             </div>
-            <div className="views-section">
-                <GraphView type="line" data={dataFile.orders} title="new orders" id="1" />
-                <GraphView type="bar" data={dataFile.orders} title="returns" id="2" />
+            <div className="views-section" id="views-section">
+                {countViews > 3 ? additionalViews : ''}
+                <GraphView type="LINE" data={dataFile.orders} title="new orders" span="7" id="1" />
+                <GraphView type="BAR" data={dataFile.orders} title="returns" span="7" id="2" />
                 {BCHPriceLast2Years.length > 0 ? <OrdersOverview data={BCHPriceLast2Years} id="3"></OrdersOverview> : ''}
             </div>
+            <NewViewModal showModal={showModal} setShowModal={setShowModal} countViews={countViews} setCountViews={setCountViews} additionalViews={additionalViews} setAdditionalViews={setAdditionalViews} />
         </div>
     );
 }
