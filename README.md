@@ -7,6 +7,7 @@ This technical assessment was written as a single-page webapp using the React fr
 * d3 (for the graphs)
 * react-redux, redux, @reduxjs/toolkit (for storing comments)
 * enzyme, enzyme-adapter-react-16, jest (for testing)
+* react-modal (for New view modal)
 
 ## Installation and running
 To run the app you'll need to install Node.js from [here](https://nodejs.org/en/)
@@ -29,5 +30,5 @@ To run the app you'll need to install Node.js from [here](https://nodejs.org/en/
 
 ## What I would do differently
 * The way I generate the tooltip on the Orders over Time graph isn't great. I basically append pieces of an svg to the focus area every time the cursor moves. I tried to see how it would react on a graph with more data and it crashed the app. Next time around I'd try to figure out a different way to do this.
-* If I had more time I would add functionality to the New view and Create new report buttons. I had a plan for the New view button to display a form within a modal where the user would select the different attributes for a new GraphView. I was also thinking the search bar could be used to search comments.
+* If I had more time I would add functionality to the Create new report button. I was also thinking about whatthe search bar could be used for. Perhaps to search the comments.
 * The pages under the Units section I wasn't too sure about but I would have tried to implement at least something for them.
