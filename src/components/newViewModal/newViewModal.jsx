@@ -4,14 +4,13 @@ import CHARTTYPES from "../../constants/chartTypes";
 import TIMESPANS from "../../constants/timeSpans";
 import "./newViewModal.css";
 import dataFile from "../../data/newOrders.json";
-import GraphView from "../graphView/graphView";
+import { useDispatch } from "react-redux";
+import { addView } from "../../reduxSlices/graphViewSlice";
 
 Modal.setAppElement("#root")
-const NewViewModal = ({showModal, setShowModal, countViews, setCountViews, additionalViews, setAdditionalViews}) => {
-    const afterOpenModal = () => {
-
-    }
-
+const NewViewModal = ({ showModal, setShowModal }) => {
+    const dispatch = useDispatch();
+    
     const closeModal = () => {
         setShowModal(false);
     }
@@ -42,16 +41,12 @@ const NewViewModal = ({showModal, setShowModal, countViews, setCountViews, addit
         if (document.getElementById("view-title").value <= 0 || timeSpanKey === "" || chartTypeKey === "") {
             document.getElementById("new-view-error").style.display = "block";
         } else {
-            const view = <GraphView 
-                title={document.getElementById("view-title").value} 
-                span={timeSpanKey} 
-                data={dataFile.orders} 
-                type={chartTypeKey} 
-                id={countViews+1} 
-            />;
-
-            setAdditionalViews([...additionalViews, view])
-            setCountViews(countViews+1);
+            dispatch(addView({
+                title: document.getElementById("view-title").value,
+                span: timeSpanKey,
+                data: dataFile.orders,
+                type: chartTypeKey,
+            }));
             closeModal();
         }
     }
@@ -59,7 +54,6 @@ const NewViewModal = ({showModal, setShowModal, countViews, setCountViews, addit
     return (
         <Modal
             isOpen={showModal}
-            onAfterOpen={afterOpenModal}
             onRequestClose={closeModal}
             className="modal"
             overlayClassName="overlay"

@@ -4,7 +4,7 @@ import GraphView from './graphView';
 import dataFile from "../../data/newOrders.json"
 import DCO from "../../data/dataCalculationObject";
 
-let wrapped = shallow(<GraphView type="line" data={dataFile.orders} title="new orders" id="1"/>);
+let wrapped = shallow(<GraphView type="LINE" data={dataFile.orders} title="new orders" id="1"/>);
 let total = DCO.sumTimespan(dataFile.orders, 7);
 let percentageDiff = Math.round(DCO.getPercentageDiff(dataFile.orders, 7));
 describe('customers.jsx test', () => {

@@ -138,22 +138,22 @@ const TooltipLineChart = ({ id, data }) => {
         let tooltipGradient = svg.append('linearGradient')
             .attr('id', 'tooltip-gradient')
             .attr("gradientUnits", "userSpaceOnUse")
-            .attr("x1", 0).attr("y1", y(2240))
-            .attr("x2", 0).attr("y2", y(0));
+            .attr("x1", 0).attr("y1", 0)
+            .attr("x2", 0).attr("y2", (height/2)-7);
         // Create the stops of the main gradient. Each stop will be assigned
         // a class to style the stop using CSS.
         tooltipGradient.append("stop")
             .attr("class", "stop-top")
-            .attr("offset", "0%");
+            .attr("offset", "0");
         tooltipGradient.append("stop")
             .attr("class", "stop-top")
-            .attr("offset", "50%");
+            .attr("offset", "0.5");
         tooltipGradient.append("stop")
             .attr("class", "stop-border")
-            .attr("offset", "50%");
+            .attr("offset", "0.5");
         tooltipGradient.append("stop")
             .attr("class", "stop-bottom")
-            .attr("offset", "50.1%");
+            .attr("offset", "0.51");
 
         focus.append("rect")
             .attr("rx", 5)
@@ -207,7 +207,7 @@ const TooltipLineChart = ({ id, data }) => {
     })
 
     return (
-        <div id={id} style={{ "height": "17.8rem" }}>
+        <div id={id}>
         </div>
     );
 }

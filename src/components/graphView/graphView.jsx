@@ -6,26 +6,29 @@ import TooltipLineChart from "../charts/tooltipLineChart/tooltipLineChart";
 import DCO from "../../data/dataCalculationObject";
 import "./graphView.css";
 import TIMESPANS from "../../constants/timeSpans";
+import { useDispatch } from "react-redux";
+import { changeViewSpan } from "../../reduxSlices/graphViewSlice";
 
 const GraphView = ({ title, data, id, type, span }) => {
+    const dispatch = useDispatch();
     const [timeSpan, setTimeSpan] = useState(span);
 
     const renderViewHeadersDiv = () => {
         const getPercentageDiff = () => {
             let percentageDifferenceBetweenSpans = Math.round(DCO.getPercentageDiff(data, timeSpan));
-            let diffDirection = percentageDifferenceBetweenSpans >= 0 ? percentageDifferenceBetweenSpans === 0 ? 'neutral' : 'upwards' : 'downwards';
+            let diffDirection = percentageDifferenceBetweenSpans >= 0 ? percentageDifferenceBetweenSpans === 0 ? "neutral" : "upwards" : "downwards";
 
             return (
                 <span className="total-percent-difference" style={
-                    diffDirection === 'neutral' ?
+                    diffDirection === "neutral" ?
                         { "color": "gold" } :
-                        diffDirection === 'upwards' ?
+                        diffDirection === "upwards" ?
                             { "color": "limegreen" } :
                             { "color": "red" }
                 }>{percentageDifferenceBetweenSpans}%{
-                        diffDirection === 'neutral' ?
+                        diffDirection === "neutral" ?
                             <ArrowRight size={15} style={{ "paddingLeft": "5px" }}></ArrowRight> :
-                            diffDirection === 'upwards' ?
+                            diffDirection === "upwards" ?
                                 <ArrowUpRight size={15} style={{ "paddingLeft": "5px" }}></ArrowUpRight> :
                                 <ArrowDownRight size={15} style={{ "paddingLeft": "5px" }}></ArrowDownRight>
                     }</span>
@@ -42,7 +45,7 @@ const GraphView = ({ title, data, id, type, span }) => {
 
     const renderTimeSpanLI = key =>
     (
-        <li key={key} value={key} onClick={(e) => { setTimeSpan(e.currentTarget.value) }}>
+        <li key={key} value={key} onClick={(e) => { dispatch(changeViewSpan({id: id, span: e.currentTarget.value})); setTimeSpan(e.currentTarget.value) }}>
             {TIMESPANS[key]}
         </li>
     )

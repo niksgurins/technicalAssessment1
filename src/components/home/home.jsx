@@ -5,12 +5,26 @@ import NewViewModal from "../newViewModal/newViewModal";
 import { Plus } from "react-bootstrap-icons";
 import "./home.css";
 import dataFile from "../../data/newOrders.json";
+import { connect, useDispatch } from "react-redux";
+import { addView } from "../../reduxSlices/graphViewSlice";
 
-const Home = () => {
-    const [countViews, setCountViews] = useState(3);
-    const [additionalViews, setAdditionalViews] = useState([]);
+const Home = (props) => {
+    const dispatch = useDispatch();
     const [BCHPriceLast2Years, setBCHPriceLast2Years] = useState([]);
     const [showModal, setShowModal] = useState(false);
+
+    const renderViews = () => (
+        props.graphViews.views.map(view => 
+            <GraphView 
+                title={view.title} 
+                span={view.span} 
+                data={view.data} 
+                type={view.type} 
+                id={view.id} 
+                key={view.key}
+            />
+        )
+    )
 
     useEffect(() => {
         if (BCHPriceLast2Years.length === 0) {
@@ -31,6 +45,12 @@ const Home = () => {
                 })
                 .catch(err => console.log(err));
         }
+
+        if (props.graphViews.views.length === 0) {
+            dispatch(addView({title: "new orders", span: 7, data: dataFile.orders, type: "LINE"}));
+            dispatch(addView({title: "returns", span: 7, data: dataFile.orders, type: "LINE"}));
+            renderViews();
+        }
     })
 
     return (
@@ -49,14 +69,16 @@ const Home = () => {
                 </div>
             </div>
             <div className="views-section" id="views-section">
-                {countViews > 3 ? additionalViews : ''}
-                <GraphView type="LINE" data={dataFile.orders} title="new orders" span="7" id="1" />
-                <GraphView type="BAR" data={dataFile.orders} title="returns" span="7" id="2" />
-                {BCHPriceLast2Years.length > 0 ? <OrdersOverview data={BCHPriceLast2Years} id="3"></OrdersOverview> : ''}
+                {renderViews()}       
+                {BCHPriceLast2Years.length > 0 ? <OrdersOverview data={BCHPriceLast2Years} id="0"></OrdersOverview> : ''}
             </div>
-            <NewViewModal showModal={showModal} setShowModal={setShowModal} countViews={countViews} setCountViews={setCountViews} additionalViews={additionalViews} setAdditionalViews={setAdditionalViews} />
+            <NewViewModal showModal={showModal} setShowModal={setShowModal} />
         </div>
     );
 }
 
-export default Home;
+const mapStateToProps = state => ({
+    graphViews: state.graphViews
+});
+
+export default connect(mapStateToProps)(Home);

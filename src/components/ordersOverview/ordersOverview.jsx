@@ -7,14 +7,14 @@ import DCO from "../../data/dataCalculationObject";
 const OrdersOverview = ({ id, data }) => {
     const getPercentageDiff = (timeSpan) => {
         let percentageDifferenceBetweenSpans = DCO.getPercentageDiff(data, timeSpan);
-        let diffDirection = percentageDifferenceBetweenSpans >= 0 ? percentageDifferenceBetweenSpans === 0 ? 'neutral' : 'upwards' : 'downwards';
+        let diffDirection = percentageDifferenceBetweenSpans >= 0 ? percentageDifferenceBetweenSpans === 0 ? "neutral" : "upwards" : "downwards";
 
         return (
             <h3 className="orders-percentage flex">
                 <span className="flex">{
-                    diffDirection === 'neutral' ?
+                    diffDirection === "neutral" ?
                         <ArrowRight size={15} style={{ "color": "gold", "paddingRight": "5px" }}></ArrowRight> :
-                        diffDirection === 'upwards' ?
+                        diffDirection === "upwards" ?
                             <ArrowUpRight size={15} style={{ "color": "limegreen", "paddingRight": "5px" }}></ArrowUpRight> :
                             <ArrowDownRight size={15} style={{ "color": "red", "paddingRight": "5px" }}></ArrowDownRight>
                 }{` ${percentageDifferenceBetweenSpans >= 0 ? `+${percentageDifferenceBetweenSpans}` : `${percentageDifferenceBetweenSpans}`}% ${percentageDifferenceBetweenSpans < 0 ? "less" : "more"} than last month`}</span>

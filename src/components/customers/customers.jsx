@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { addComment } from "../../reduxSlices/commentSlice"
 import { useHistory } from "react-router-dom";
 
-const Customers = () => {
+const Customers = (props) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const [rating, setRating] = useState(0);
@@ -26,6 +26,7 @@ const Customers = () => {
             document.getElementById("review-error").style.display = "block";
         } else {
             dispatch(addComment({ buyer: document.getElementById("contact-address").value, text: document.getElementById("comment").value, rating: rating, createdAt: new Date().toString() }));
+            props.setLocation("/");
             history.push("/");
         }
     }
